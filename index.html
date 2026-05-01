@@ -1,85 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Goodwall Facts</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+<meta charset="UTF-8">
+<title>Goodwall Learn & Earn</title>
 
-    .container {
-      text-align: center;
-      background: white;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      max-width: 500px;
-    }
+<style>
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: #333;
+}
 
-    h1 {
-      color: #333;
-    }
+.container {
+  background: white;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+}
 
-    #fact {
-      margin: 20px 0;
-      font-size: 18px;
-      color: #555;
-      min-height: 80px;
-    }
+h1 {
+  margin-bottom: 10px;
+}
 
-    button {
-      padding: 12px 24px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      background: #4a90e2;
-      color: white;
-      cursor: pointer;
-    }
+#fact {
+  margin: 20px 0;
+  font-size: 18px;
+  min-height: 80px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
-    button:hover {
-      background: #357abd;
-    }
-  </style>
+button {
+  padding: 12px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #36d1dc, #5b86e5);
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.progress {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.bar {
+  height: 8px;
+  background: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #36d1dc, #5b86e5);
+  transition: width 0.4s ease;
+}
+
+.badge {
+  margin-top: 15px;
+  font-weight: bold;
+  color: #5b86e5;
+}
+
+.points {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #666;
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="container">
-  <h1>Goodwall Facts</h1>
-  <p id="fact">Click the button to learn something new 👇</p>
-  <button onclick="showFact()">Show Random Fact</button>
+  <h1>Goodwall Learn & Earn</h1>
+
+  <p id="fact">Click below to start learning 👇</p>
+
+  <button onclick="showFact()">Learn Something</button>
+
+  <div class="points">Points: <span id="points">0</span> 🪙</div>
+
+  <div class="progress">
+    Progress: <span id="count">0</span>/15
+    <div class="bar">
+      <div class="fill" id="fill"></div>
+    </div>
+  </div>
+
+  <div class="badge" id="badge">Status: Beginner</div>
+
 </div>
 
 <script>
-  const facts = [
-    "Goodwall is a global social learning and earning platform for young people.",
-    "Users on Goodwall can earn rewards by completing challenges and tasks.",
-    "Goodwall connects students with opportunities like scholarships and internships.",
-    "The platform focuses on helping youth build skills for the future of work.",
-    "Goodwall has partnered with major organizations and global brands.",
-    "Users can showcase achievements and build a digital profile on Goodwall.",
-    "Goodwall encourages social impact through community challenges.",
-    "The app is used in over 150 countries worldwide.",
-    "Goodwall helps users learn real-world skills like communication and leadership.",
-    "Some challenges on Goodwall offer cash rewards or prizes.",
-    "Goodwall promotes digital inclusion and accessibility for young people.",
-    "Users can network and collaborate with peers globally.",
-    "The platform is designed to be mobile-first and easy to use.",
-    "Goodwall supports career discovery through guided experiences.",
-    "Many users join Goodwall to improve their employability and skills."
-  ];
 
-  function showFact() {
-    const randomIndex = Math.floor(Math.random() * facts.length);
-    document.getElementById("fact").innerText = facts[randomIndex];
+const facts = [
+"Goodwall is a global platform helping youth learn and earn.",
+"Users earn rewards by completing challenges.",
+"Goodwall connects students to scholarships and internships.",
+"It operates in over 150 countries.",
+"Users can build digital profiles showcasing achievements.",
+"Goodwall partners with global organizations.",
+"Challenges often offer real cash or prizes.",
+"It focuses on future work skills.",
+"Users can network globally.",
+"It promotes digital inclusion.",
+"Goodwall supports career discovery.",
+"Users gain real-world experience through tasks.",
+"It’s mobile-first and accessible.",
+"Community challenges drive impact.",
+"It helps improve employability."
+];
+
+let remainingFacts = [...facts];
+let count = 0;
+let points = 0;
+
+function getBadge(c) {
+  if (c >= 15) return "🏆 Goodwall Pro";
+  if (c >= 10) return "🚀 Explorer";
+  if (c >= 5) return "🌱 Beginner+";
+  return "🌱 Beginner";
+}
+
+function showFact() {
+  if (remainingFacts.length === 0) {
+    remainingFacts = [...facts];
+    count = 0;
+    points = 0;
   }
+
+  const index = Math.floor(Math.random() * remainingFacts.length);
+  const fact = remainingFacts.splice(index, 1)[0];
+
+  const factEl = document.getElementById("fact");
+  factEl.style.opacity = 0;
+
+  setTimeout(() => {
+    factEl.innerText = fact;
+    factEl.style.opacity = 1;
+  }, 200);
+
+  count++;
+  points += 10;
+
+  document.getElementById("count").innerText = count;
+  document.getElementById("points").innerText = points;
+
+  const progressPercent = (count / facts.length) * 100;
+  document.getElementById("fill").style.width = progressPercent + "%";
+
+  document.getElementById("badge").innerText = "Status: " + getBadge(count);
+}
+
 </script>
 
 </body>
