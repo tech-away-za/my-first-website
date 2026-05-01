@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Goodwall Facts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #fact {
+      margin: 20px 0;
+      font-size: 18px;
+      color: #555;
+      min-height: 80px;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #357abd;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Goodwall Facts</h1>
+  <p id="fact">Click the button to learn something new 👇</p>
+  <button onclick="showFact()">Show Random Fact</button>
+</div>
+
+<script>
+  const facts = [
+    "Goodwall is a global social learning and earning platform for young people.",
+    "Users on Goodwall can earn rewards by completing challenges and tasks.",
+    "Goodwall connects students with opportunities like scholarships and internships.",
+    "The platform focuses on helping youth build skills for the future of work.",
+    "Goodwall has partnered with major organizations and global brands.",
+    "Users can showcase achievements and build a digital profile on Goodwall.",
+    "Goodwall encourages social impact through community challenges.",
+    "The app is used in over 150 countries worldwide.",
+    "Goodwall helps users learn real-world skills like communication and leadership.",
+    "Some challenges on Goodwall offer cash rewards or prizes.",
+    "Goodwall promotes digital inclusion and accessibility for young people.",
+    "Users can network and collaborate with peers globally.",
+    "The platform is designed to be mobile-first and easy to use.",
+    "Goodwall supports career discovery through guided experiences.",
+    "Many users join Goodwall to improve their employability and skills."
+  ];
+
+  function showFact() {
+    const randomIndex = Math.floor(Math.random() * facts.length);
+    document.getElementById("fact").innerText = facts[randomIndex];
+  }
+</script>
+
+</body>
+</html>
